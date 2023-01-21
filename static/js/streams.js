@@ -8,6 +8,7 @@ const client = AgoraRTC.createClient({mode:'rtc', codec:'vp8'})
 let localTracks = []
 let remoteUsers = {}
 
+
 let joinAndDisplayLocalStream = async () => {
     client.on('user-published', handleUserJoined)
     client.on('user-left', handleUserLeft)
@@ -24,6 +25,7 @@ let joinAndDisplayLocalStream = async () => {
     localTracks[1].play(`user-${UID}`)
     await client.publish([localTracks[0], localTracks[1]])
 }
+
 
 let handleUserJoined = async (user, mediaType) => {
     remoteUsers[user.uid] = user
@@ -48,10 +50,12 @@ let handleUserJoined = async (user, mediaType) => {
     }
 }
 
+
 let handleUserLeft = async (user) => {
     delete remoteUsers[user.uid]
     document.getElementById(`user-container-${user.uid}`).remove()
 }
+
 
 let leaveAndRemoveLocalStream = async () => {
     for (let i =0; localTracks.length > i; i++){
@@ -63,6 +67,19 @@ let leaveAndRemoveLocalStream = async () => {
     window.open('/', '_self')
 }
 
+
+let toggleCamera = async (e) => {
+    if(localTracks[1].muted){
+        await localTracks[1].setMuted(false)
+        e.target.style.backgroudColor = '#fff'
+    }else{
+        await localTracks[1].setMuted(true)
+        e.target.style.backgroudColor = 'rgb(255, 80, 80, 1)'
+    }
+}
+
+
 joinAndDisplayLocalStream()
 
 document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
+document.getElementById('camera-btn').addEventListener('click', toggleCamera)
