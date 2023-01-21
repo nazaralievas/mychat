@@ -24,13 +24,13 @@ body{
     transform: translate(-50%, -50%);
 }
 
-/* ----- ROOM STYLING ------ */
+/* ----- Room Styling ------ */
 
 #video-streams{
     display: flex;
     flex-wrap: wrap;
     height: 85vh;
-    width: 75%;
+    width: 95%;
     margin: 0 auto;
 }
 
@@ -39,13 +39,39 @@ body{
     flex-grow: 1;
     max-height: 100%;
     min-height: 350px;
-    border: 1px solid rgb(75, 95, 172, 1);
+    border: 1px solid rgb(75, 95, 172,);
     border-radius: 5px;
     margin: 2px;
     background-color: rgba(198, 202, 219, 1);
+    position: relative;
 }
 
 .video-player{
     height: 100%;
     width: 100%;
+}
+
+/* ----- Room Styling / Controls ------ */
+
+#controls-wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    column-gap: 1em;
+    position: fixed;
+    bottom: 20px;
+}
+
+.control-icon{
+    height: 20px;
+    width: 20px;
+    box-shadow: var(--shadow);
+    background-color: #fff;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+#leave-btn{
+    background-color: rgb(255, 80, 80, 1);
 }

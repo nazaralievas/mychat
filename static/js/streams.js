@@ -10,6 +10,7 @@ let remoteUsers = {}
 
 let joinAndDisplayLocalStream = async () => {
     client.on('user-published', handleUserJoined)
+    client.on('user-left', handleUserLeft)
     
     UID = await client.join(APP_ID, CHANNEL, TOKEN, null)
 
@@ -20,9 +21,7 @@ let joinAndDisplayLocalStream = async () => {
                         <div class="video-player" id="user-${UID}"></div>
                     </div>`
     document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
-
     localTracks[1].play(`user-${UID}`)
-
     await client.publish([localTracks[0], localTracks[1]])
 }
 
@@ -37,9 +36,9 @@ let handleUserJoined = async (user, mediaType) => {
         }
 
         player = `<div class="video-container id=user-container-${user.uid}">
-                        <div class="username-wrapper"><span class="user-name">My name</span></div>
-                        <div class="video-player" id="user-${user.uid}"></div>
-                    </div>`
+                    <div class="username-wrapper"><span class="user-name">My name</span></div>
+                    <div class="video-player" id="user-${user.uid}"></div>
+                </div>`
         document.getElementById('video-streams').insertAdjacentHTML('beforeend', player)
         user.videoTrack.play(`user-${user.uid}`)
     }
@@ -49,5 +48,21 @@ let handleUserJoined = async (user, mediaType) => {
     }
 }
 
+let handleUserLeft = async (user) => {
+    delete remoteUsers[user.uid]
+    document.getElementById(`user-container-${user.uid}`).remove()
+}
+
+let leaveAndRemoveLocalStream = async () => {
+    for (let i =0; localTracks.length > i; i++){
+        localTracks[i].stop()
+        localTracks[i].close()
+    }
+
+    await client.leave()
+    window.open('/', '_self')
+}
 
 joinAndDisplayLocalStream()
+
+document.getElementById('leave-btn').addEventListener('click', leaveAndRemoveLocalStream)
