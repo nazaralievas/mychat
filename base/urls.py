@@ -5,4 +5,6 @@ from .views import *
 urlpatterns = [
     path('', lobby, name='lobby'),
     path('room/', room, name='room'),
+
+    path('get_token/', getToken)
 ]
