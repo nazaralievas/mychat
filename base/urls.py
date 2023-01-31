@@ -9,4 +9,5 @@ urlpatterns = [
     path('get_token/', getToken),
     path('create-member/', createMember),
     path('get-member/', getMember),
+    path('delete-member/', deleteMember),
 ]
