@@ -7,7 +7,7 @@ urlpatterns = [
     path('room/', room, name='room'),
 
     path('get_token/', getToken),
-    path('create-member/', createMember),
-    path('get-member/', getMember),
-    path('delete-member/', deleteMember),
+    path('create_member/', createMember),
+    path('get_member/', getMember),
+    path('delete_member/', deleteMember),
 ]

@@ -56,10 +56,9 @@ def getMember(request):
     return JsonResponse({'name':member.name}, safe=False)
 
 
-csrf_exempt
+@csrf_exempt
 def deleteMember(request):
     data = json.loads(request.body)
-
     member = RoomMember.objects.get(
         name=data['name'],
         uid=data['UID'],
